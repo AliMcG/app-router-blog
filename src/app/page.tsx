@@ -12,7 +12,8 @@ export default async function Home() {
   const hello = await api.post.hello.query({ text: "from tRPC" });
   const blogs = await api.post.list.query();
   const session = await getServerAuthSession();
-  console.log("blogs in page.tsx", blogs);
+  console.log("session in root page", session?.user.role)
+  // console.log("blogs in page.tsx", blogs);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
@@ -21,13 +22,7 @@ export default async function Home() {
           Blog App Prototype
         </h1>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-        {/* {blogs?.map( (post, index) => { */}
           <BlogListContainer blogs={blogs as BlogPostPostgres[]} />
-        {/* // })} */}
-         
-     
-          
-          <div>Blogs here ^</div>
         </div>
         <div className="flex flex-col items-center gap-2">
           <p className="text-2xl text-white">
@@ -37,6 +32,7 @@ export default async function Home() {
           <div className="flex flex-col items-center justify-center gap-4">
             <p className="text-center text-2xl text-white">
               {session && <span>Logged in as {session.user?.name}</span>}
+              {session && <span>Logged in with ROLE: {session.user.role}</span>}
             </p>
             <Link
               href={session ? "/api/auth/signout" : "/api/auth/signin"}
