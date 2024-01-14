@@ -1,13 +1,28 @@
 import "~/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { Inter, Montserrat, Frank_Ruhl_Libre } from "next/font/google";
 import { cookies } from "next/headers";
-
+import { polyfill } from "interweave-ssr";
+import Navbar from "./_components/NavBar";
+import NextAuthProvider from "./_components/providers/SessionProvider"
+//  Polyfill function here to manage a hydration error caused by <Markup> component
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+polyfill();
 import { TRPCReactProvider } from "~/trpc/react";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-monts",
+});
+
+const frank = Frank_Ruhl_Libre({
+  subsets: ["latin"],
+  variable: "--font-frank",
 });
 
 export const metadata = {
@@ -23,9 +38,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
+      <body className={`font-sans ${inter.variable} ${frank.variable} ${montserrat.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
+          <NextAuthProvider>
+          <Navbar />
           {children}
+          </NextAuthProvider>
         </TRPCReactProvider>
       </body>
     </html>

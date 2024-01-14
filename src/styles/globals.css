@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Create the root custom css colour
+This can then be added to tailwind.config.cjs
+with a variable name to consume throughout the code. */
+
+@layer base {
+    :root {
+      --color-custom-blue: #F2F7FF
+    }
+    /* to override the "PreFlight in tailwindCSS
+    this allows the h1 tags to have some styling in the 
+    rich text area */
+    h1 {
+      @apply text-2xl font-bold my-2;
+    }
+    h2 {
+      @apply text-xl font-bold my-2;
+    }
+    h3 {
+      @apply text-lg font-bold my-2;
+    }
+  }
