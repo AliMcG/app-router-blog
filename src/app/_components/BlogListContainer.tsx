@@ -30,7 +30,7 @@ const BlogListContainer = async ({ blogs }: { blogs: BlogPostPostgres[]}) => {
               {post.createdAt.toString().slice(0, 7)}
             </h2>
             <Markup content={`${post.description.substring(0, 300)} ...`} />
-            <div dangerouslySetInnerHTML={{__html: post.description.substring(0, 250)}}></div>
+            {/* <div dangerouslySetInnerHTML={{__html: post.description.substring(0, 250)}}></div> */}
           </div>
         </Link>
         <Link href={`/${post.id}`} className="basis-2/4">
