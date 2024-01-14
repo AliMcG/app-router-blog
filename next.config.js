@@ -23,6 +23,17 @@ const config = {
           },
         ],
       },
+      webpack(config) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+        config.module.rules.push({
+          test: /\.svg$/i,
+          issuer: { and: [/\.(js|ts|md)x?$/] },
+          use: ["@svgr/webpack"]
+        });
+    
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return config;
+      },
 };
 
 export default config;
