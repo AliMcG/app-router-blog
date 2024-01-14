@@ -19,6 +19,14 @@ export const postRouter = createTRPCRouter({
       const result = await ctx.db.blog.findMany()
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return result
+    }),
+    locate: publicProcedure.input(z.object({ id: z.string()})).query(async ({ ctx, input }) => {
+      const result = await ctx.db.blog.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+      return result
     })
   // create: protectedProcedure
   //   .input(z.object({ name: z.string().min(1) }))
