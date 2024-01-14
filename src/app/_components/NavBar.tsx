@@ -32,18 +32,18 @@ function Navbar() {
         <div className="absolute right-3 -top-5">
           <div className="flex lg:flex-col flex-row gap-2">
             { pathname === "/blog" && <SearchInput />}
-            <LoginButton />
+            { pathname === "/blog" && <LoginButton />}
           </div>
         </div>
         <header className="mt-6 w-4/5 md:w-auto">
           <Image src={titleImage} alt="Harry Duncton" width="700" height="50" />
         </header>
         <nav className="mt-4 flex w-4/5 justify-evenly font-monts font-semibold text-gray-700 md:w-2/3">
-          {sortedTitles.map((title, index) => {
+          {sortedTitles.map((title) => {
             return (
               <>
                   <Link
-                    key={index}
+                    key={title.href}
                     className={
                       pathname == `${title.href}` ? "text-[#073D93]" : ""
                     }

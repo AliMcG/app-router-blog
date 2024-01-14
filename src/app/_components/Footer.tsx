@@ -1,6 +1,8 @@
+"use client"
+
 import Link from "next/link";
-import LinkedIn from "../../public/linkedin-custom.svg";
-import Twitter from "../../public/twitter-custom.svg";
+import LinkedIn from "@/public/linkedin-custom.svg";
+import Twitter from "@/public/twitter-custom.svg";
 
 function Footer() {
   const year = new Date().getFullYear();
