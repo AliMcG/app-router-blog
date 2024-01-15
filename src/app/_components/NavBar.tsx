@@ -41,19 +41,15 @@ function Navbar() {
         <nav className="mt-4 flex w-4/5 justify-evenly font-monts font-semibold text-gray-700 md:w-2/3">
           {sortedTitles.map((title) => {
             return (
-              <>
-                <Link
-                  key={title.href}
-                  className={
-                    pathname == `${title.href}` ? "text-[#073D93]" : ""
-                  }
-                  href={title.href}
-                >
-                  <h1 className="text-lg hover:text-[#067A75] md:text-2xl">
-                    {title.title}
-                  </h1>
-                </Link>
-              </>
+              <Link
+                key={title.href}
+                className={pathname == `${title.href}` ? "text-[#073D93]" : ""}
+                href={title.href}
+              >
+                <h1 className="text-lg hover:text-[#067A75] md:text-2xl">
+                  {title.title}
+                </h1>
+              </Link>
             );
           })}
         </nav>
