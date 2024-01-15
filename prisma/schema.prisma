@@ -59,7 +59,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   role          UserRole  @default(USER)
-  BlogVote      BlogVote[]
+  blogsVotedOn      BlogVote[]
 }
 
 model VerificationToken {
