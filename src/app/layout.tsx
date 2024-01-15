@@ -6,6 +6,7 @@ import { polyfill } from "interweave-ssr";
 import Navbar from "./_components/NavBar";
 import NextAuthProvider from "@/_components/providers/SessionProvider"
 import Footer from "@/_components/Footer";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 //  Polyfill function here to manage a hydration error caused by <Markup> component
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
 polyfill();
@@ -44,6 +45,7 @@ export default function RootLayout({
           <NextAuthProvider>
           <Navbar />
           {children}
+          <SpeedInsights />
           <Footer />
           </NextAuthProvider>
         </TRPCReactProvider>
