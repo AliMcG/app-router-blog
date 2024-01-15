@@ -29,7 +29,7 @@ const BlogListContainer = async ({ blogs }: { blogs: BlogPostPostgres[] }) => {
                   {post.title.toUpperCase()}
                 </h2>
                 <h2 className="text-base text-gray-700">
-                  {post.createdAt.toString().slice(0, 7)}
+                  {post.createdAt.toDateString()}
                 </h2>
                 <Markup content={`${post.description.substring(0, 300)} ...`} />
               </div>

@@ -23,7 +23,7 @@ const BlogContainer = ({ data }: { data: BlogPostPostgres }) => {
         <h2 className="text-sm font-normal text-gray-700">
           By <span className="font-semibold">Harry Dunction</span> Posted{" "}
           <span className="font-semibold">
-            {data?.createdAt.toString().slice(0, 7)}
+            {data?.createdAt.toDateString()}
           </span>
         </h2>
         <Markup
