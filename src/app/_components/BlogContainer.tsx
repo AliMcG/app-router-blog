@@ -1,10 +1,21 @@
 import Image from "next/image";
 import { Markup } from "interweave";
 import type { BlogPostPostgres } from "~/types";
+import { HeartIcon } from "@heroicons/react/24/solid";
 
 const BlogContainer = ({ data }: { data: BlogPostPostgres }) => {
   return (
-    <div className="mx-4 flex h-4/5 flex-col-reverse items-center border-2 border-[#CFE1FF] p-4 md:w-3/5 ">
+    <div className="relative mx-4 flex h-4/5 flex-col-reverse items-center border-2 border-[#CFE1FF] p-4 md:w-3/5 ">
+      <div className="absolute rounded-full border-2 border-[#CFE1FF] bg-white odd:right-5 even:left-5 lg:bottom-5 ">
+              <div>
+                <span className="relative text-red-500">
+                  <HeartIcon className="h-8 w-8" />
+                </span>
+                <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-sm text-white">
+                  {`${data?.numberVotes}`}
+                </p>
+              </div>
+            </div>
       <div className="p-4 font-sans text-gray-700">
         <h2 className="mb-4 font-frank text-2xl font-bold uppercase text-[#052962]">
           {data?.title}
