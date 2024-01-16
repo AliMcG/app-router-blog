@@ -64,7 +64,7 @@ export const postRouter = createTRPCRouter({
       });
       return updatedBlog;
     }),
-  listBySerachText: protectedProcedure
+  listBySerachText: publicProcedure
     .input(
       z.object({
         text: z.string(),
