@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client"
 import { useForm, type SubmitHandler } from "react-hook-form"
-
-export type Inputs = {
+import { sendEmail } from "../hooks/SendEmail"
+export type FormData = {
   email: string
-  subject: string
+  name: string
   message: string
 }
 const ContactForm = () => {
@@ -14,10 +14,10 @@ const ContactForm = () => {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Inputs>()
+  } = useForm<FormData>()
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    sendEmail(data)
     reset()
   }
   return (
@@ -30,7 +30,6 @@ const ContactForm = () => {
           <p className="mb-6 text-center font-light text-gray-500 sm:text-xl">
           Contact me at <a className="text-blue-400" href="mailto:harry@harryduncton.com">harry@harryduncton.com</a> or via the form below 
           </p>
-          {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -49,18 +48,18 @@ const ContactForm = () => {
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-900 ">
-                Subject
+                Name
               </label>
               <input
                 type="text"
-                {...register("subject", {
+                {...register("name", {
                   required: "Please fill in"
                 })}
                 className="focus:ring-primary-500 focus:border-primary-500  block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-900 shadow-sm"
-                placeholder="Let us know how we can help you"
+                placeholder="Let us know who you are..."
 
               />
-              <p className="text-red-400 mt-2">{errors.subject?.message}</p>
+              <p className="text-red-400 mt-2">{errors.name?.message}</p>
             </div>
             <div className="sm:col-span-2">
               <label className="mb-2 block text-sm font-medium text-gray-900 ">

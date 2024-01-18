@@ -4,11 +4,23 @@ import Image from "next/image";
 import type { Cloundinary } from "../../../types";
 import { Editor } from "@tinymce/tinymce-react";
 import { api } from "~/trpc/react";
+import { useSession } from 'next-auth/react'
+import { redirect } from 'next/navigation'
 import { type SyntheticEvent, useReducer, useState, useEffect } from "react";
 import { ActionKind, type State, blogReducer } from "../../hooks/blogReducer";
 import toast, { Toaster } from "react-hot-toast";
+import MessageContainer from "~/app/_components/MessageContainer";
 
 export default function EditPage({ params }: { params: { id: string } }) {
+  const { status, data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/blog')
+    }
+  })
+  if (status === "loading") {
+    return <MessageContainer message={"Loading or not authenticated..."} />
+  }
   const { data } = api.post.locate.useQuery({ id: params.id });
 
   const [state, dispatch] = useReducer(blogReducer, { ...data } as State);
@@ -110,7 +122,8 @@ export default function EditPage({ params }: { params: { id: string } }) {
   return (
     <main className="m-auto flex flex-1 flex-col items-center justify-center">
       <div className="z-0 mx-60 flex w-4/5 flex-col border-2 border-[#CFE1FF] bg-white text-gray-700 lg:w-3/5">
-        <h1 className="flex justify-center">Edit this blog entry</h1>
+      <h1 className="flex justify-center">Hi {session?.user.name}, edit thisblog entry</h1>
+
         <form
           onSubmit={handleSubmit}
           className="m-10 flex w-11/12 flex-col items-center justify-center"

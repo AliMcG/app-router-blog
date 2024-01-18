@@ -7,8 +7,10 @@ import React from "react";
 import { api } from "~/trpc/react";
 import type { Cloundinary } from "~/types";
 import { ActionKind, blogReducer, initialState } from "../hooks/blogReducer";
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react'
+import { redirect } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast';
+import MessageContainer from "../_components/MessageContainer";
 
 
 // sets the file input default to these image.files.types
@@ -16,7 +18,15 @@ import toast, { Toaster } from 'react-hot-toast';
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 export default function AddPage() {
-const { data: session } = useSession();
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/blog')
+    }
+  })
+  if (status === "loading") {
+    return <MessageContainer message={"Loading or not authenticated..."} />
+  }
   const [state, dispatch] = useReducer(blogReducer, initialState);
   const [file, setFile] = useState<File>();
   const [filePreview, setFilePreview] = useState(false);
@@ -88,23 +98,8 @@ const { data: session } = useSession();
   }, [file]);
  
   function handleSubmit(e: SyntheticEvent) {
-    // const pushPage =() => {
-    //   void router.push("/blog")
-    // }
     e.preventDefault();
     mutate(state)
-    // const res = http<DataRows>(`/api/create-blog`, {
-    //   method: "POST",
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(state)
-    // })
-    //   .then(res => {
-    //     console.log("data from update", res)
-    //     toast.success("New blog uploaded")
-    //     // setInterval(pushPage, 2000)
-    //   })
   }
 
   return (
