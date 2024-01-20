@@ -14,10 +14,13 @@ It was a my first solo project just using Typescript and continuing to explore N
 * dynamic routing in NextJS is simple to set up.
 * Typescript is awesome but tricky. This type safe fetch request was my first introduction to generics in Typescript:
 ```tsx
-export async function http<T>(request: RequestInfo): Promise<T> {
-  const response = await fetch(request);
-  const body = (await response.json()) as T;
-  return body;
+export async function typeSafeFetch<T>(
+  request: RequestInfo,
+  body?: RequestInit,
+): Promise<T> {
+  const response = await fetch(request, body);
+  const result = (await response.json()) as T;
+  return result;
 }
 ```
 * I still love TailwindCSS

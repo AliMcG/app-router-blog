@@ -30,6 +30,8 @@ export const env = createEnv({
     ),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
+    FORM_EMAIL: z.string(),
+    FORM_EMAIL_PASSWORD: z.string()
   },
 
   /**
@@ -52,6 +54,8 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    FORM_EMAIL: process.env.FORM_EMAIL,
+    FORM_EMAIL_PASSWORD: process.env.FORM_EMAIL_PASSWORD,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

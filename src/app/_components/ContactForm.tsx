@@ -2,6 +2,7 @@
 "use client"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { sendEmail } from "../hooks/SendEmail"
+import { Toaster } from "react-hot-toast"
 export type FormData = {
   email: string
   name: string
@@ -32,7 +33,7 @@ const ContactForm = () => {
           </p>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             <div>
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Your email
               </label>
               <input
@@ -87,6 +88,7 @@ const ContactForm = () => {
           </form>
         </div>
       </section>
+      <Toaster />
     </>
   );
 };
