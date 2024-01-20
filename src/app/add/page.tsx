@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/non-nullable-type-assertion-style */
 "use client"
 
 import { useState, useReducer, useEffect, type SyntheticEvent } from "react";
@@ -5,17 +6,14 @@ import { Editor } from "@tinymce/tinymce-react";
 import Image from "next/image";
 import React from "react";
 import { api } from "~/trpc/react";
-import type { Cloundinary } from "~/types";
 import { ActionKind, blogReducer, initialState } from "../hooks/blogReducer";
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast';
-import MessageContainer from "../_components/MessageContainer";
+import MessageContainer from "~/app/_components/MessageContainer";
+import { imageUploader } from "~/app/hooks/imageUploader";
+import { imageMimeType } from "~/utils/helperFunctions";
 
-
-// sets the file input default to these image.files.types
-// Multipurpose Internet Mail Extensions
-const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 export default function AddPage() {
   const { data: session, status } = useSession({
@@ -37,58 +35,51 @@ export default function AddPage() {
             toast.success("New blog uploaded")
         }
     })
-  const uploader = async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "blog-duncton");
 
-    const data = (await fetch(
-      `https://api.cloudinary.com/v1_1/dejhaiho2/image/upload`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    ).then((r) => r.json())) as Cloundinary;
-    console.log(data);
-    if (data) {
-      const payload = data?.secure_url;
-      dispatch({ type: ActionKind.Image, payload: payload });
-      setShowUploadButton(true);
-    }
-  };
-
-  function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+  async function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.currentTarget?.files?.[0];
     if (!file?.type.match(imageMimeType)) {
       alert("Image mime type is not valid");
       return;
     }
     setFile(file);
-    void uploader(file);
+    const imageData = await imageUploader(file)
+    if (imageData) {
+      const payload = (imageData)?.secure_url;
+      dispatch({ type: ActionKind.Image, payload: payload });
+      setShowUploadButton(true);
+    }
   }
 
   useEffect(() => {
     let fileReader: FileReader,
       isCancel = false;
-    // creates a new FileReader to read the uploaded file.
-    // fileReader is async by default
-    // fileReader.onload happens automatically after async fileReader.readAsDataURL has returned the file.
+      /**
+       * creates a new FileReader to read the uploaded file.
+       * fileReader is async by default
+       * fileReader.onload happens automatically after async fileReader.readAsDataURL has returned the file.
+       */
+    
     if (file) {
       fileReader = new FileReader();
-      // the event of fileReader is the return of the async fileReader.readAsDataURL.
+      /**
+       * the event of fileReader is the return of the async fileReader.readAsDataURL.
+       */
       fileReader.onload = (e) => {
         const result = e.target;
         if (result && !isCancel) {
-          // adds the data:url of uploaded file to Image Preview
+          /**
+           * adds the data:url of uploaded file to Image Preview
+           */
           setImagePreview(result?.result as string);
-
-          // boolean switch to control the image preview div in component render.
           setFilePreview(true);
         }
       };
       fileReader.readAsDataURL(file);
     }
-    // return cleanup function to clear the current useEffect and reset for a new file upload.
+    /**
+     * return cleanup function to clear the current useEffect and reset for a new file upload.
+     */
     return () => {
       isCancel = true;
       if (fileReader && fileReader.readyState === 1) {

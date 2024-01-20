@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/non-nullable-type-assertion-style */
 "use client";
 import Image from "next/image";
-import type { Cloundinary } from "../../../types";
 import { Editor } from "@tinymce/tinymce-react";
 import { api } from "~/trpc/react";
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 import { type SyntheticEvent, useReducer, useState, useEffect } from "react";
-import { ActionKind, type State, blogReducer } from "../../hooks/blogReducer";
+import { ActionKind, type State, blogReducer } from "~/app/hooks/blogReducer";
 import toast, { Toaster } from "react-hot-toast";
 import MessageContainer from "~/app/_components/MessageContainer";
+import { imageUploader } from "~/app/hooks/imageUploader";
+import { imageMimeType } from "~/utils/helperFunctions";
 
 export default function EditPage({ params }: { params: { id: string } }) {
   const { status, data: session } = useSession({
@@ -22,7 +23,10 @@ export default function EditPage({ params }: { params: { id: string } }) {
     return <MessageContainer message={"Loading or not authenticated..."} />
   }
   const { data } = api.post.locate.useQuery({ id: params.id });
-
+  const [file, setFile] = useState<File>();
+  const [filePreview, setFilePreview] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
+  const [showUploadButton, setShowUploadButton] = useState(false);
   const [state, dispatch] = useReducer(blogReducer, { ...data } as State);
 
   useEffect(() => {
@@ -38,41 +42,20 @@ export default function EditPage({ params }: { params: { id: string } }) {
       toast.success("Blog post updated");
     },
   });
-  const [file, setFile] = useState<File>();
-  const [filePreview, setFilePreview] = useState(false);
-  const [imagePreview, setImagePreview] = useState("");
 
-  const imageMimeType = /image\/(png|jpg|jpeg)/i;
-  const [showUploadButton, setShowUploadButton] = useState(false);
-
-  const uploader = async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "blog-duncton");
-
-    const data = (await fetch(
-      `https://api.cloudinary.com/v1_1/dejhaiho2/image/upload`,
-      {
-        method: "POST",
-        body: formData,
-      },
-    ).then((res) => res.json())) as Cloundinary;
-
-    if (data) {
-      const payload = data?.secure_url;
-      dispatch({ type: ActionKind.Image, payload: payload });
-      setShowUploadButton(true);
-    }
-  };
-
-  function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+  async function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.currentTarget?.files?.[0];
     if (!file?.type.match(imageMimeType)) {
       alert("Image mime type is not valid");
       return;
     }
     setFile(file);
-    void uploader(file);
+    const imageData = await imageUploader(file)
+    if (imageData) {
+      const payload = (imageData)?.secure_url;
+      dispatch({ type: ActionKind.Image, payload: payload });
+      setShowUploadButton(true);
+    }
   }
 
   useEffect(() => {
