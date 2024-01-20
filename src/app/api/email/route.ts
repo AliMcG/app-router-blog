@@ -11,7 +11,9 @@ import { env } from "~/env";
 export async function POST(request: NextRequest) {
   const { email, name, message } = await request.json();
   const transport = nodemailer.createTransport({
-    service: "Yahoo",
+    host: 'smtp.zoho.eu',
+  secure: true,
+  port: 465,
     auth: {
       user: env.FORM_EMAIL,
       pass: env.FORM_EMAIL_PASSWORD,
