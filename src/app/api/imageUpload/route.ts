@@ -16,10 +16,10 @@ export async function POST(request: NextRequest) {
  
   return Response.json(data)
 }
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '500mb',
-    },
-  },
-}
+// export const config = {
+//   api: {
+//     bodyParser: {
+//       sizeLimit: '500mb',
+//     },
+//   },
+// }

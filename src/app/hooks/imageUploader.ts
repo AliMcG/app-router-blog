@@ -5,7 +5,7 @@ export const imageUploader = async (file: File) => {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", "blog-duncton");
-  const apiEndpoint = "/api/imageUpload";
+  const apiEndpoint = 'https://api.cloudinary.com/v1_1/dejhaiho2/image/upload';
   const data = (await fetch(
     apiEndpoint,
     {
