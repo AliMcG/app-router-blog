@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 
 export default function BlogPage({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const { data } = api.post.locate.useQuery(
+  const { data, refetch } = api.post.locate.useQuery(
     { id: params.id },
     {
       enabled: !!params.id,
@@ -22,9 +22,9 @@ export default function BlogPage({ params }: { params: { id: string } }) {
     userId: session?.user?.id as string,
     blogId: params.id,
   });
-  console.log("userData", userData?.blogsVotedOn);
+ 
   const { mutate: userMutation } = api.users.updateUser.useMutation({
-    onSuccess: () => console.log("use mutation"),
+    onSuccess: () => refetch(),
   });
   const { mutate: voteCountMutation } =
     api.post.updateBlogVoteCount.useMutation();

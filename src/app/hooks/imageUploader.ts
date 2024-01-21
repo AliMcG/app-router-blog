@@ -1,17 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { Cloundinary } from "~/types";
 
 export const imageUploader = async (file: File) => {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", "blog-duncton");
-
-  const apiEndpoint = "/api/image";
+  const apiEndpoint = "/api/imageUpload";
   const data = (await fetch(
-    "https://api.cloudinary.com/v1_1/dejhaiho2/image/upload",
+    apiEndpoint,
     {
       method: "POST",
       body: formData,
     },
-  ).then((r) => r.json())) as Cloundinary;
-  return data;
+  ).then((r) => r.json())
+  .catch((err) => {
+    console.error(err)
+  }))
+  return data as Cloundinary
 };
