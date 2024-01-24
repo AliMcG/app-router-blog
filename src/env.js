@@ -12,7 +12,7 @@ export const env = createEnv({
       .url()
       .refine(
         (str) => !str.includes("YOUR_MYSQL_URL_HERE"),
-        "You forgot to change the default URL"
+        "You forgot to change the default URL",
       ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
@@ -26,14 +26,17 @@ export const env = createEnv({
       // Since NextAuth.js automatically uses the VERCEL_URL if present.
       (str) => process.env.VERCEL_URL ?? str,
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-      process.env.VERCEL ? z.string() : z.string().url()
+      process.env.VERCEL ? z.string() : z.string().url(),
     ),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
     FORM_EMAIL: z.string(),
     FORM_EMAIL_PASSWORD: z.string(),
     FORM_EMAIL_PROVIDER: z.string(),
-    CLOUNDINARY_API: z.string()
+    CLOUNDINARY_API: z.string(),
+    CLOUNDINARY_API_KEY: z.string(),
+    CLOUNDINARY_API_SECRET: z.string(),
+    CLOUNDINARY_CLOUD_NAME: z.string(),
   },
 
   /**
@@ -43,6 +46,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_CLOUNDINARY_API: z.string()
   },
 
   /**
@@ -59,7 +63,11 @@ export const env = createEnv({
     FORM_EMAIL: process.env.FORM_EMAIL,
     FORM_EMAIL_PASSWORD: process.env.FORM_EMAIL_PASSWORD,
     FORM_EMAIL_PROVIDER: process.env.FORM_EMAIL_PROVIDER,
-    CLOUNDINARY_API: process.env.CLOUNDINARY_API
+    CLOUNDINARY_API: process.env.CLOUNDINARY_API,
+    CLOUNDINARY_API_KEY: process.env.CLOUNDINARY_API_KEY,
+    CLOUNDINARY_API_SECRET: process.env.CLOUNDINARY_API_SECRET,
+    CLOUNDINARY_CLOUD_NAME: process.env.CLOUNDINARY_CLOUD_NAME,
+    NEXT_PUBLIC_CLOUNDINARY_API: process.env. NEXT_PUBLIC_CLOUNDINARY_API
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
