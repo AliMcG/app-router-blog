@@ -9,6 +9,7 @@ import Button from '@/_components/Button';
 import Typography from '@mui/material/Typography';
 import { api } from "~/trpc/react";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from 'next/navigation';
 
 const style = {
   position: 'absolute' as const,
@@ -23,10 +24,12 @@ const style = {
 };
 
 export default function ConfirmDeleteModal({ id }: {id:string}) {
+  const router = useRouter()
   const { mutate: deleteMutate } = api.post.delete.useMutation({
     onSuccess: () => {
       toast.success("Blog deleted");
       handleClose()
+      router.push('/blog')
     },
   });
   const [open, setOpen] = React.useState(false);
