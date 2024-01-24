@@ -42,7 +42,7 @@ export default function BlogPage({ params }: { params: { id: string } }) {
     return (
       <Button
         text={"Edit"}
-        textColour={"text-blue-500"}
+       intent={"primary"}
         onClick={() => void router.push(`/add/${data?.id as string}`)}
       />
     );
@@ -51,7 +51,7 @@ export default function BlogPage({ params }: { params: { id: string } }) {
     return (
       <Button
         text={"Vote"}
-        textColour={"text-green-500"}
+        intent={"secondary"}
         onClick={() => voteOnBlog(data?.id as string)}
       />
     );

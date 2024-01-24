@@ -28,3 +28,9 @@ export async function typeSafeFetch<T>(
 # Prisma
 
 * `npx prisma db push` - after updating the schema
+
+# TODO
+
+* Refactor components for design system
+* Add tests for tRPC routers
+* Add Cypress for e2e testing

@@ -38,13 +38,13 @@ export default function ConfirmDeleteModal({ id }: {id:string}) {
 
   const DeleteButton = () => {
     return (
-      <Button text={'Delete'} textColour={'text-red-500'} onClick={() => deleteMutate({ id })} />
+      <Button text={'Delete'} intent={'danger'} onClick={() => deleteMutate({ id })} />
     );
   };
 
   return (
     <div>
-      <Button onClick={handleOpen} text={"Delete"} textColour={'text-red-600'}/>
+      <Button onClick={handleOpen} text={"Delete"} intent={'danger'}/>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -65,7 +65,7 @@ export default function ConfirmDeleteModal({ id }: {id:string}) {
             </Typography>
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               <div className='flex justify-end gap-4'>
-              <Button text={'Cancel'} onClick={handleClose} textColour={'text-slate-600'} />
+              <Button text={'Cancel'} onClick={handleClose} intent={'primary'} />
              <DeleteButton />
               </div>
              
