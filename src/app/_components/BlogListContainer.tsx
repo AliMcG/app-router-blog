@@ -23,7 +23,7 @@ const BlogListContainer = async ({ blogs }: { blogs: BlogPostPostgres[] }) => {
                 </p>
               </div>
             </div>
-            <Link href={`/blog/${post.id}`} className="basis-2/4">
+            <Link href={`/blog/${post.id}`} className="basis-2/4" data-cy={`blog-link-${index}`}>
               <div className="p-4 font-monts text-base text-gray-700 hover:text-[#067A75] ">
                 <h2 className="mb-4 font-frank text-2xl font-bold hover:text-[#067A75]">
                   {post.title.toUpperCase()}

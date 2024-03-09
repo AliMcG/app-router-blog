@@ -23,7 +23,7 @@ export default function SearchPage({ params }: { params: { search: string } }) {
 
   return (
     <div className="m-auto flex flex-col items-center">
-      <h1>Blogs for search: {params.search}</h1>
+      <h1 data-cy="searched-blog-title">Blogs for search: {params.search}</h1>
       <BlogListContainerClient blogs={data as BlogPostPostgres[]} />
     </div>
   );

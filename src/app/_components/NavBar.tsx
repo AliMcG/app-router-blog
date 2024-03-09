@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import titleImage from "@/public/harry-new-header.png";
 import SearchInput from "./SearchInput";
 import { useSession } from "next-auth/react";
-import LoginButton from "./LoginButton";
+import LoginButton from "./AuthButton";
 
 function Navbar() {
   const pathname = usePathname();
@@ -42,6 +42,7 @@ function Navbar() {
           {sortedTitles.map((title) => {
             return (
               <Link
+                data-cy={title.href}
                 key={title.href}
                 className={pathname == `${title.href}` ? "text-[#073D93]" : ""}
                 href={title.href}

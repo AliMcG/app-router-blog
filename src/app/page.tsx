@@ -20,7 +20,7 @@ export default function Home() {
           <article className="flex basis-2/4 flex-col justify-evenly gap-4 p-4 font-monts text-base text-neutral-700">
             <h3 className="flex flex-col italic">
               <span>
-                I write about tools. I also write about drinks, and other stuff.
+                I write about tools. I also write about tech, and other stuff.
               </span>
               <span>
                 Hire me if you want someone to do your writing for you.
@@ -47,7 +47,7 @@ export default function Home() {
             </p>
             <p className="italic">What am I good at?</p>
             <p>
-              Whether i&#39;s writing in-depth reviews of exciting home and garden
+              Whether it&#39;s writing in-depth reviews of exciting home and garden
               technology like the latest robotic lawnmower, or helping people
               choose a drill for their next home renovation job, I try to keep
               things clear and conversational.
