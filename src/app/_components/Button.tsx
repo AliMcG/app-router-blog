@@ -5,7 +5,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 };
 const buttonStyles = cva(
-  'bg-blue/10 hover:bg-blue/60 w-28 rounded border-2 border-[#CFE1FF] px-3 py-1 font-semibold no-underline transition',
+  'bg-custom-blue hover:bg-blue-200 w-28 rounded border-2 border-[#CFE1FF] px-3 py-1 font-semibold no-underline transition hover:bg-slate-200',
   {
     variants: {
       intent: {
