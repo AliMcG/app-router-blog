@@ -102,3 +102,10 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+
+/**
+ * creatCallerFactory is used to create a caller for the AppRouter
+ * This caller can then used used in unit tests and to caller other router functions 
+ * within a different router call.
+ */
+export const creatCallerFactory = t.createCallerFactory
