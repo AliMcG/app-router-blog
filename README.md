@@ -29,8 +29,21 @@ export async function typeSafeFetch<T>(
 
 * `npx prisma db push` - after updating the schema
 
-# TODO
+# Jest Testing
+A combination of the following docs and videos:
 
-* Refactor components for design system
-* Add tests for tRPC routers
-* Add Cypress for e2e testing
+https://trpc.io/docs/server/server-side-calls 
+
+https://github.com/trpc/examples-next-prisma-starter/blob/main/src/server/routers/post.test.ts
+
+https://create.t3.gg/en/usage/trpc#sample-integration-test
+
+# Cypress Testing
+
+* Add tests for visiting user ✅
+* Add tests for authenticated USER
+* Add tests for authenticated ADMIN
+
+## TODO
+* Add tests for tRPC routers ✅
+* Add Cypress for e2e testing ✅

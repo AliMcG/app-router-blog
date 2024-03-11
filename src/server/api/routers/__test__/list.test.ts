@@ -1,34 +1,27 @@
 import { test, expect } from "@jest/globals"
-import type { inferProcedureInput } from '@trpc/server';
 import { createTRPCContext } from '../../trpc';
-import { type AppRouter, createCaller } from '../../root';
-import type { Blog, PrismaClient } from "@prisma/client";
-import { mockDeep } from "jest-mock-extended";
-import type { Session } from "next-auth";
+import { createCaller } from '../../root';
 
 /**
- * This code is commented out due to unresolved bug related to Jest config and node_modules
- * Not clear how to move forward
+ * These modules required mocking for Jest to work.
  */
-test('add and get post', async () => {
-  // const prismaMock = mockDeep<PrismaClient>();
-  // const mockSession: Session = {
-  //   expires: new Date(Date.now()).toISOString(),
-  //   user: { id: "test-id", role: "USER" }
-  // };
-  // const ctx = {
-  //   headers: new Headers,
-  //   db: prismaMock,
-  //   session: mockSession
-  // }
-  // const caller = createCaller(ctx);
-  // const input: inferProcedureInput<AppRouter['post']['list']> = {
-  //   text: 'hello test',
-  //   title: 'hello test',
-  // };
-  // const posts = await caller.post.list();
-  console.log("posts")
-  // const byId = await caller.post.byId({ id: post.id });
+jest.mock("superjson", () => ({
+  superjson: jest.fn()
+}))
+jest.mock("~/env", () => ({
+  env: jest.fn(),
+ }))
+ jest.mock("next-auth", () => ({
+  getServerSession: jest.fn(),
+ }))
 
-  // expect(byId).toMatchObject(input);
+test('add and get post', async () => {
+
+  const ctx = await createTRPCContext({ headers: new Headers() })
+
+  const caller = createCaller(ctx)
+
+  const posts = await caller.post.list();
+
+  expect(posts[0]).toHaveProperty("description");
 });

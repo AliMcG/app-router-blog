@@ -33,7 +33,7 @@
     "cloudinary-react": "^1.8.1",
     "clsx": "^2.1.0",
     "interweave": "^13.0.0",
-    "next": "^14.0.2",
+    "next": "^14.0.1",
     "next-auth": "^4.24.5",
     "nodemailer": "^6.9.8",
     "postinstall": "^0.9.0",

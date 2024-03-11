@@ -103,11 +103,11 @@ export const postRouter = createTRPCRouter({
       });
       return result;
     }),
-    updateBlogVoteCount: protectedProcedure
+  updateBlogVoteCount: protectedProcedure
     .input(
       z.object({
         id: z.string(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const result = await ctx.db.blog.update({

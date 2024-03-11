@@ -6,12 +6,8 @@ export default {
   moduleNameMapper: {
     "~/(.*)": ["<rootDir>/src/$1"]
 },
-  setupFiles: ["dotenv/config"],
   transform: {
     '^.+\\.(ts|tsx)?$': 'ts-jest',
     '^.+\\.(js|jsx)$': 'babel-jest',
   },
-  transformIgnorePatterns: [
-    "/node_modules/(?!superjson)/",  // Ignore all node_modules except superjson
-  ],
 };
