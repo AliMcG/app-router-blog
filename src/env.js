@@ -7,13 +7,6 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z
-      .string()
-      .url()
-      .refine(
-        (str) => !str.includes("YOUR_MYSQL_URL_HERE"),
-        "You forgot to change the default URL",
-      ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -33,10 +26,6 @@ export const env = createEnv({
     FORM_EMAIL: z.string(),
     FORM_EMAIL_PASSWORD: z.string(),
     FORM_EMAIL_PROVIDER: z.string(),
-    CLOUNDINARY_API: z.string(),
-    CLOUNDINARY_API_KEY: z.string(),
-    CLOUNDINARY_API_SECRET: z.string(),
-    CLOUNDINARY_CLOUD_NAME: z.string(),
   },
 
   /**
@@ -54,7 +43,6 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
@@ -63,10 +51,6 @@ export const env = createEnv({
     FORM_EMAIL: process.env.FORM_EMAIL,
     FORM_EMAIL_PASSWORD: process.env.FORM_EMAIL_PASSWORD,
     FORM_EMAIL_PROVIDER: process.env.FORM_EMAIL_PROVIDER,
-    CLOUNDINARY_API: process.env.CLOUNDINARY_API,
-    CLOUNDINARY_API_KEY: process.env.CLOUNDINARY_API_KEY,
-    CLOUNDINARY_API_SECRET: process.env.CLOUNDINARY_API_SECRET,
-    CLOUNDINARY_CLOUD_NAME: process.env.CLOUNDINARY_CLOUD_NAME,
     NEXT_PUBLIC_CLOUNDINARY_API: process.env. NEXT_PUBLIC_CLOUNDINARY_API
   },
   /**
