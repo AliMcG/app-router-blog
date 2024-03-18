@@ -15,7 +15,7 @@ jest.mock("~/env", () => ({
   getServerSession: jest.fn(),
  }))
 
-test('add and get post', async () => {
+test('Get all posts', async () => {
 
   const ctx = await createTRPCContext({ headers: new Headers() })
 
