@@ -1,7 +1,15 @@
 name: Cypress Tests
 
 on: push
-
+env:
+  POSTGRES_PRISMA_URL: ${{ secrets.POSTGRES_PRISMA_URL}}
+  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET}}
+  GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID}}
+  GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET}}
+  FORM_EMAIL: ${{ secrets.FORM_EMAIL}}
+  FORM_EMAIL_PASSWORD: ${{ secrets.FORM_EMAIL_PASSWORD}}
+  FORM_EMAIL_PROVIDER: ${{ secrets.FORM_EMAIL_PROVIDER}}
+  NEXT_PUBLIC_CLOUNDINARY_API: ${{ secrets. NEXT_PUBLIC_CLOUNDINARY_API}}
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
