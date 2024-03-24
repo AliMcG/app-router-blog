@@ -6,6 +6,6 @@ describe('Logging In', () => {
     cy.visit('http://localhost:3000/')
  
     // Find a link with an href attribute containing "blog" and click it
-    cy.get('[data-cy="/blog"]').click()
+    cy.get('[data-cy="/add"]').click()
   })
 })

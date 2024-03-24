@@ -4,10 +4,22 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /// <reference types="cypress" />
 
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(email: string, password: string): Chainable<void>
+      loginByGoogleApi(): Chainable<void>
+    }
+  }
+}
+
 
 // cypress/support/commands.js
 Cypress.Commands.add('loginByGoogleApi', () => {
   cy.log('Logging in to Google')
+  /** Programmatically logs into Google with NextAuth
+   * https://docs.cypress.io/guides/end-to-end-testing/google-authentication#Custom-Command-for-Google-Authentication
+   */
   cy.request({
     method: 'POST',
     url: 'https://www.googleapis.com/oauth2/v4/token',
@@ -25,67 +37,14 @@ Cypress.Commands.add('loginByGoogleApi', () => {
       url: 'https://www.googleapis.com/oauth2/v3/userinfo',
       headers: { Authorization: `Bearer ${access_token}` },
     }).then(({ body }) => {
-      // cy.log(body.email)
-      // console.log("logging", body)
-      const userItem = {
-        token: id_token,
-        user: {
-          googleId: body.sub,
-          email: body.email,
-          givenName: body.given_name,
-          familyName: body.family_name,
-          imageUrl: body.picture,
-        },
-      }
-      // window.localStorage.setItem('authToken', body.access_token)
+
+      /** sets the session cookie and then intercepts the session to add the user role 
+       * https://www.youtube.com/watch?v=SzhulGxprCw
+      */
+      cy.setCookie('next-auth.session-token', id_token)
+      cy.intercept('api/auth/session', {status: 200, user: {role: "ADMIN"}}).as('next-auth')
+
     })
 
-    // https://github.com/yeungalan0/site-monorepo/blob/main/my_site/cypress/support/commands.ts
-    // Interesting example here to set the useSession
-
-    // cy.session(userItem, () => {
-    //   cy.request({
-    //     method: 'GET',
-    //     url: 'https://www.googleapis.com/oauth2/v3/userinfo',
-    //     headers: { Authorization: `Bearer ${access_token}` },
-    //   }).then(({ body }) => {
-    //     cy.log(body.email)
-    //     console.log("logging", body)
-    //     const userItem = {
-    //       token: id_token,
-    //       user: {
-    //         googleId: body.sub,
-    //         email: body.email,
-    //         givenName: body.given_name,
-    //         familyName: body.family_name,
-    //         imageUrl: body.picture,
-    //       },
-    //     }})
-    // })
   })
 })
-
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      login(email: string, password: string): Chainable<void>
-      loginByGoogleApi(): Chainable<void>
-      LoginWithGoogle(): Chainable<void>
-    }
-  }
-}
