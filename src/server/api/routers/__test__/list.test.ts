@@ -1,6 +1,6 @@
 import { test, expect } from "@jest/globals"
-import { createTRPCContext } from '../../trpc';
-import { createCaller } from '../../root';
+import { createTRPCContext } from '~/server/api/trpc';
+import { createCaller } from '~/server/api/root';
 
 /**
  * These modules required mocking for Jest to work.
@@ -15,7 +15,7 @@ jest.mock("~/env", () => ({
   getServerSession: jest.fn(),
  }))
 
-test('Get all posts', async () => {
+test('List all posts', async () => {
 
   const ctx = await createTRPCContext({ headers: new Headers() })
 
