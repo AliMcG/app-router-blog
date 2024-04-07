@@ -24,4 +24,5 @@ test('List all posts', async () => {
   const posts = await caller.post.list();
 
   expect(posts[0]).toHaveProperty("description");
+  // poss to check for not an empty string?
 });
