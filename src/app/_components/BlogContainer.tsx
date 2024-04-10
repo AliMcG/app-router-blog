@@ -21,7 +21,7 @@ const BlogContainer = ({ data }: { data: BlogPostPostgres }) => {
           {data?.title}
         </h2>
         <h2 className="text-sm font-normal text-gray-700">
-          By <span className="font-semibold">Harry Dunction</span> Posted{" "}
+          By <span className="font-semibold">Harry Duncton</span> Posted{" "}
           <span className="font-semibold">
             {data?.createdAt.toDateString()}
           </span>
