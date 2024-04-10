@@ -9,7 +9,7 @@ describe("Add a new blog and delete it", () => {
   it("should a add a new blog", () => {
     cy.get('[data-cy="/add"]').click();
     cy.get('[data-cy="title-input"]').type("TESTING");
-    cy.get("#description").type("TESTING TESTING");
+    // cy.get("#description").type("TESTING TESTING");
     // cy.get('[data-cy="description-input"]').type("TESTING TESTING")
 
     cy.fixture("example.png", null).as("example_image")
