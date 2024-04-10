@@ -1,6 +1,11 @@
 name: Cypress Tests
 
-on: push
+on: 
+  push: 
+    branches:
+      - main
+  schedule: 
+    - cron: 0 13 * * 1
 env:
   CLOUNDINARY_API: ${{ secrets.CLOUNDINARY_API }}
   FORM_EMAIL: ${{ secrets.FORM_EMAIL}}
@@ -13,6 +18,13 @@ env:
   NEXTAUTH_URL:  ${{ secrets.NEXTAUTH_URL}}
   NEXT_PUBLIC_CLOUNDINARY_API: ${{ secrets. NEXT_PUBLIC_CLOUNDINARY_API}}
   POSTGRES_PRISMA_URL: ${{ secrets.POSTGRES_PRISMA_URL}}
+  DATABASE_URL: ${{ secrets.DATABASE_URL}}
+  DATABASE_API_URL: ${{ secrets.DATABASE_API_URL}}
+  DATABASE_API_KEY: ${{ secrets.DATABASE_API_KEY}}
+  DATABASE_SOURCE: ${{ secrets.DATABASE_SOURCE}}
+  DATABASE_NAME: ${{ secrets.DATABASE_NAME}}
+  DATABASE_COLLECTION: ${{ secrets.DATABASE_COLLECTION}}
+  DATABASE_USER_ID: ${{ secrets.DATABASE_USER_ID}}
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
