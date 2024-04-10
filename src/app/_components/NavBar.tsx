@@ -21,7 +21,7 @@ function Navbar() {
     { title: "HOME", href: "/" },
     { title: "BLOG", href: "/blog" },
     { title: "CONTACT", href: "/contact" },
-    session?.user.role === "ADMIN" && { title: "ADD", href: "/add" },
+    session?.user?.role === "ADMIN" && { title: "ADD", href: "/add" },
   ];
 
   const sortedTitles: TitleProps[] = titles.filter(Boolean) as TitleProps[];
