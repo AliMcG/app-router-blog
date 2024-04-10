@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/non-nullable-type-assertion-style */
-"use client"
+"use client";
 
 import { useState, useReducer, useEffect, type SyntheticEvent } from "react";
 import { Editor } from "@tinymce/tinymce-react";
@@ -7,34 +7,33 @@ import Image from "next/image";
 import React from "react";
 import { api } from "~/trpc/react";
 import { ActionKind, blogReducer, initialState } from "../hooks/blogReducer";
-import { useSession } from 'next-auth/react'
-import { redirect } from 'next/navigation'
-import toast, { Toaster } from 'react-hot-toast';
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 import MessageContainer from "~/app/_components/MessageContainer";
 import { imageUploader } from "~/app/hooks/imageUploader";
 import { imageMimeType } from "~/utils/helperFunctions";
-
 
 export default function AddPage() {
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
-      redirect('/blog')
-    }
-  })
+      redirect("/blog");
+    },
+  });
   if (status === "loading") {
-    return <MessageContainer message={"Loading or not authenticated..."} />
+    return <MessageContainer message={"Loading or not authenticated..."} />;
   }
   const [state, dispatch] = useReducer(blogReducer, initialState);
   const [file, setFile] = useState<File>();
   const [filePreview, setFilePreview] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
   const [showUplaodButton, setShowUploadButton] = useState(false);
-    const { mutate } = api.post.create.useMutation({
-        onSuccess: () => {
-            toast.success("New blog uploaded")
-        }
-    })
+  const { mutate } = api.post.create.useMutation({
+    onSuccess: () => {
+      toast.success("New blog uploaded");
+    },
+  });
 
   async function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.currentTarget?.files?.[0];
@@ -43,9 +42,9 @@ export default function AddPage() {
       return;
     }
     setFile(file);
-    const imageData = await imageUploader(file)
+    const imageData = await imageUploader(file);
     if (imageData) {
-      const payload = (imageData)?.secure_url;
+      const payload = imageData?.secure_url;
       dispatch({ type: ActionKind.Image, payload: payload });
       setShowUploadButton(true);
     }
@@ -54,12 +53,12 @@ export default function AddPage() {
   useEffect(() => {
     let fileReader: FileReader,
       isCancel = false;
-      /**
-       * creates a new FileReader to read the uploaded file.
-       * fileReader is async by default
-       * fileReader.onload happens automatically after async fileReader.readAsDataURL has returned the file.
-       */
-    
+    /**
+     * creates a new FileReader to read the uploaded file.
+     * fileReader is async by default
+     * fileReader.onload happens automatically after async fileReader.readAsDataURL has returned the file.
+     */
+
     if (file) {
       fileReader = new FileReader();
       /**
@@ -87,25 +86,28 @@ export default function AddPage() {
       }
     };
   }, [file]);
- 
+
   function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
-    mutate(state)
+    mutate(state);
   }
 
   return (
     <main className="m-auto flex flex-1 flex-col items-center justify-center">
-      <div className="z-0 mx-60 flex flex-col w-4/5 border-2 border-[#CFE1FF] bg-white lg:w-3/5 text-gray-700">
-        <h1 className="flex justify-center">Hi {session?.user.name}, write a new blog entry</h1>
+      <div className="z-0 mx-60 flex w-4/5 flex-col border-2 border-[#CFE1FF] bg-white text-gray-700 lg:w-3/5">
+        <h1 className="flex justify-center">
+          Hi {session?.user.name}, write a new blog entry
+        </h1>
         <form
           onSubmit={handleSubmit}
           className="m-10 flex w-11/12 flex-col items-center justify-center"
         >
           <input
-            className="mb-4 w-80 focus:ring-primary-500 focus:border-primary-500 block rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm"
+            className="focus:ring-primary-500 focus:border-primary-500 mb-4 block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm"
             type="text"
             name="title"
             placeholder="Title..."
+            data-cy="title-input"
             required
             value={state.title}
             onChange={(e) =>
@@ -118,6 +120,7 @@ export default function AddPage() {
           <Editor
             apiKey="07xjj6wsxo6o246cjml0rvt9rq0u4rnhnre171w9l80jom2g"
             id="description"
+            data-cy="description-input"
             value={state.description}
             init={{ height: "20rem", width: "80%", menubar: false }}
             onEditorChange={(e) =>
@@ -127,11 +130,18 @@ export default function AddPage() {
           />
           <label className="mt-4">
             Add Image:
-            <input type="file" name="image" onChange={changeHandler} required className="mb-4 w-80 focus:ring-primary-500 focus:border-primary-500 block rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm"
-           />
+            <input
+              type="file"
+              name="image"
+              data-cy="image-input"
+              onChange={changeHandler}
+              required
+              className="focus:ring-primary-500 focus:border-primary-500 mb-4 block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm"
+            />
           </label>
           <p>
-            Once the photo has been converted, the upload button will be available
+            Once the photo has been converted, the upload button will be
+            available
           </p>
           {showUplaodButton && (
             <button
@@ -142,7 +152,7 @@ export default function AddPage() {
             </button>
           )}
         </form>
-        <div className="flex justify-center mb-4">
+        <div className="mb-4 flex justify-center">
           {filePreview ? (
             <div>
               <Image
@@ -157,7 +167,7 @@ export default function AddPage() {
           )}
         </div>
       </div>
-      <Toaster/>
+      <Toaster />
     </main>
   );
 }
