@@ -82,6 +82,8 @@ As part of a CI/CD pipeline this projects uses the awaesome power to [GitHub act
 
 The [schedule](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule) event uses the [cron syntax](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07) to schedule the workflow. 
 
+Check out the workflow logs for [Cypress CI Jobs](https://github.com/AliMcG/app-router-blog/actions)
+
 The [cypress.yml](https://github.com/AliMcG/app-router-blog/blob/main/.github/workflows/cypress.yml) in the `.github/workflows` folder details the schedule for this project.
 
 
