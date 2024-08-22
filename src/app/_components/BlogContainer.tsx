@@ -27,7 +27,7 @@ const BlogContainer = ({ data }: { data: BlogPostPostgres }) => {
           </span>
         </h2>
         <Markup
-          className="font-monts text-base text-slate-800"
+          className="font-monts text-base text-slate-800 [&_a]:text-blue-500 [&_a:hover]:underline"
           content={data?.description}
         />
       </div>
