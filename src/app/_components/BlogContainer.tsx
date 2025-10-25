@@ -26,10 +26,13 @@ const BlogContainer = ({ data }: { data: BlogPostPostgres }) => {
             {data?.createdAt.toDateString()}
           </span>
         </h2>
-        <Markup
+        {/* <Markup
           className="font-monts text-base text-slate-800 [&_a]:text-blue-500 [&_a:hover]:underline"
           content={data?.description}
-        />
+        /> */}
+        <div className="font-monts text-base text-slate-800 [&_a]:text-blue-500 [&_a:hover]:underline [&_h2]:text-red-600"
+      dangerouslySetInnerHTML={{ __html: data?.description }}
+    />
       </div>
       <div className="flex w-full items-center">
         <Image
