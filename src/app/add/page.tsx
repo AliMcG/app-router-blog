@@ -123,8 +123,7 @@ export default function AddPage() {
             data-cy="description-input"
             value={state.description}
             init={{ height: "20rem", width: "80%", menubar: false }}
-            onEditorChange={(e) =>
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            onEditorChange={(e: string) =>
               dispatch({ type: ActionKind.Description, payload: e })
             }
           />

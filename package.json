@@ -55,6 +55,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^18.19.130",
     "@types/node-fetch": "^2.6.13",
+    "@types/nodemailer": "^7.0.3",
     "@types/react": "^18.3.26",
     "@types/react-dom": "^18.3.7",
     "@typescript-eslint/eslint-plugin": "^6.21.0",

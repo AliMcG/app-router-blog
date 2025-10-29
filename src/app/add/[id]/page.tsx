@@ -5,7 +5,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { api } from "~/trpc/react";
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
-import { type SyntheticEvent, useReducer, useState, useEffect } from "react";
+import { type SyntheticEvent, useReducer, useState, useEffect, ChangeEvent } from "react";
 import { ActionKind, type State, blogReducer } from "~/app/hooks/blogReducer";
 import toast, { Toaster } from "react-hot-toast";
 import MessageContainer from "~/app/_components/MessageContainer";
@@ -118,7 +118,7 @@ export default function EditPage({ params }: { params: { id: string } }) {
             required
             placeholder="Title..."
             value={state?.title}
-            onChange={(e) =>
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
               dispatch({
                 type: ActionKind.Title,
                 payload: e.currentTarget.value,
@@ -130,7 +130,7 @@ export default function EditPage({ params }: { params: { id: string } }) {
             id="description"
             value={state?.description}
             init={{ height: "25rem", width: "100%", menubar: false }}
-            onEditorChange={(e) =>
+            onEditorChange={(e: string) =>
               dispatch({ type: ActionKind.Description, payload: e })
             }
           />
